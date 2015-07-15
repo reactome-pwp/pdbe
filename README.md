@@ -1,10 +1,9 @@
 # PDBe Widget
 Shows molecules structure from pdbe
 
-## How to use the widget?
-
 <img src="pdbe-example.png " align="center" alt="pdb widget example">
 
+## How to use the widget?
 
 First add EBI Nexus repository in your pom.xml file
 
