@@ -4,11 +4,6 @@
     <inherits name='com.google.gwt.user.User'/>
     <inherits name='com.google.gwt.json.JSON'/>
 
-    <stylesheet src="http://www.ebi.ac.uk:80/pdbe-apps/widgets/css/pdbprints.css"/>
-    <!--<script src="http://www.ebi.ac.uk:80/pdbe-apps/widgets/js/essential.js"/>-->
-    <!--<script src="http://www.ebi.ac.uk:80/pdbe-apps/widgets/js/basic.js"/>-->
-    <!--<script src="http://www.ebi.ac.uk:80/pdbe-apps/widgets/js/pdbprints.js"/>-->
-
     <source path="events"/>
     <source path="handlers"/>
     <source path="model"/>
