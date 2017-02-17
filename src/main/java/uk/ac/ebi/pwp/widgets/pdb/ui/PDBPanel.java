@@ -100,15 +100,15 @@ public class PDBPanel extends Composite {
 
     private Widget getSummaryLink(String pdbId){
         //IMPORTANT: If the "cbc120" changes, maybe you also want to change the anchor width
-//        String url = "http://www.ebi.ac.uk/pdbe-srv/view/images/entry/" + pdbId + "_cbc120.png";
-         String url = "http://www.ebi.ac.uk/pdbe/static/entry/" + pdbId + "_deposited_chain_front_image-200x200.png";
+//        String url = "//www.ebi.ac.uk/pdbe-srv/view/images/entry/" + pdbId + "_cbc120.png";
+         String url = "//www.ebi.ac.uk/pdbe/static/entry/" + pdbId + "_deposited_chain_front_image-200x200.png";
 
         Image image = new Image(url);
         image.getElement().getStyle().setBorderWidth(0, Style.Unit.PX);
         image.getElement().getStyle().setWidth(120, Style.Unit.PX);
         image.getElement().getStyle().setHeight(120, Style.Unit.PX);
 
-        Anchor anchor = new Anchor("", "http://www.ebi.ac.uk/pdbe-srv/view/entry/" + pdbId + "/summary" , "_blank");
+        Anchor anchor = new Anchor("", "//www.ebi.ac.uk/pdbe-srv/view/entry/" + pdbId + "/summary" , "_blank");
         DOM.insertBefore(anchor.getElement(), image.getElement(), DOM.getFirstChild(anchor.getElement()));
         anchor.getElement().getStyle().setWidth(150, Style.Unit.PX);
         return anchor;
