@@ -20,7 +20,7 @@ public class PDBRetriever {
         void onPDBERetrieverError(String errorMessage);
     }
 
-    private static final String PDBE_HOST = "//www.ebi.ac.uk/";
+    private static final String PDBE_HOST = "https://www.ebi.ac.uk/";
     private static final String PDBE_APPS_URL_ALL = "pdbe/api/mappings/best_structures/";
 
     private ResultHandler handler;
