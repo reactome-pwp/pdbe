@@ -9,46 +9,37 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * @author Guilherme VITERI <gviteri@ebi.ac.uk>
  * @author Antonio Fabregat <fabregat@ebi.ac.uk>
  */
 public class PDBRetriever {
-
-    public interface ResultHandler {
-        void setPDBEAllResults(List<PDBObject> pdbObjectList);
-        void setPDEBBestResult(PDBObject pdbObject);
-        void onEmptyResult();
-        void onPDBERetrieverError(String errorMessage);
-    }
-
     private static final String PDBE_HOST = "https://www.ebi.ac.uk/";
     private static final String PDBE_APPS_URL_ALL = "pdbe/api/mappings/best_structures/";
-
     private ResultHandler handler;
     private String proteinAccession;
-
     public PDBRetriever(String proteinAccession, ResultHandler handler) {
         this.proteinAccession = proteinAccession;
         this.handler = handler;
     }
 
-    public void getBestStructure(){
+    public void getBestStructure() {
         String url = PDBE_HOST + PDBE_APPS_URL_ALL + this.proteinAccession + "/";
         RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, url);
         try {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
-                    switch (response.getStatusCode()){
-                        case 200:
+                    switch (response.getStatusCode()) {
+                        case Response.SC_OK:
                             QueryResult result = QueryResult.buildQueryResult(response.getText());
                             JsArray<PDBObject> pdbs = result.getPDBObject(proteinAccession);
-                            if(pdbs.length()>0){
+                            if (pdbs.length() > 0) {
                                 handler.setPDEBBestResult(pdbs.get(0));
-                            }else{
+                            } else {
                                 handler.onEmptyResult();
                             }
                             break;
-                        case 404:
+                        case Response.SC_NOT_FOUND:
                             handler.onEmptyResult();
                             break;
                         default:
@@ -62,31 +53,31 @@ public class PDBRetriever {
                 }
             });
         } catch (RequestException e) {
-                handler.onPDBERetrieverError(e.getMessage());
+            handler.onPDBERetrieverError(e.getMessage());
         }
     }
 
-    public void getAllStructures(){
+    public void getAllStructures() {
         String url = PDBE_HOST + PDBE_APPS_URL_ALL + this.proteinAccession + "/";
         RequestBuilder requestBuilder = new RequestBuilder(RequestBuilder.GET, url);
         try {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
-                    switch (response.getStatusCode()){
-                        case 200:
+                    switch (response.getStatusCode()) {
+                        case Response.SC_OK:
                             QueryResult result = QueryResult.buildQueryResult(response.getText());
                             JsArray<PDBObject> pdbs = result.getPDBObject(proteinAccession);
                             List<PDBObject> all = new LinkedList<PDBObject>();
                             for (int i = 0; i < pdbs.length(); i++) {
                                 PDBObject pdbObject = pdbs.get(i);
-                                if(!pdbObject.isEmpty()){
+                                if (!pdbObject.isEmpty()) {
                                     all.add(pdbs.get(i));
                                 }
                             }
-                            if(all.isEmpty()){
+                            if (all.isEmpty()) {
                                 handler.onEmptyResult();
-                            }else{
+                            } else {
                                 handler.setPDBEAllResults(all);
                             }
                             break;
@@ -103,5 +94,15 @@ public class PDBRetriever {
         } catch (RequestException e) {
             handler.onPDBERetrieverError(e.getMessage());
         }
+    }
+
+    public interface ResultHandler {
+        void setPDBEAllResults(List<PDBObject> pdbObjectList);
+
+        void setPDEBBestResult(PDBObject pdbObject);
+
+        void onEmptyResult();
+
+        void onPDBERetrieverError(String errorMessage);
     }
 }
