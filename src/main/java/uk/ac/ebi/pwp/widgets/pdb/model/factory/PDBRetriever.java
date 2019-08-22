@@ -68,7 +68,7 @@ public class PDBRetriever {
                         case Response.SC_OK:
                             QueryResult result = QueryResult.buildQueryResult(response.getText());
                             JsArray<PDBObject> pdbs = result.getPDBObject(proteinAccession);
-                            List<PDBObject> all = new LinkedList<PDBObject>();
+                            List<PDBObject> all = new LinkedList<>();
                             for (int i = 0; i < pdbs.length(); i++) {
                                 PDBObject pdbObject = pdbs.get(i);
                                 if (!pdbObject.isEmpty()) {
