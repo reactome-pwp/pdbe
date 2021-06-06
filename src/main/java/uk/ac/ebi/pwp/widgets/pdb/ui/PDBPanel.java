@@ -38,7 +38,7 @@ public class PDBPanel extends Composite {
         setWidth("100%");
     }
 
-    private Widget getPropertiesPanel(PDBObject pdbObject, String proteinName){
+    private Widget getPropertiesPanel(PDBObject pdbObject, String proteinName) {
         FlowPanel properties = new FlowPanel();
         properties.setWidth("100%");
         properties.getElement().getStyle().setMarginTop(10, Style.Unit.PX);
@@ -68,8 +68,8 @@ public class PDBPanel extends Composite {
         return properties;
     }
 
-    private Widget getPropertyWidget(String key, String value){
-        String aux = (value!=null) ? value : "N/A";
+    private Widget getPropertyWidget(String key, String value) {
+        String aux = (value != null) ? value : "N/A";
 
         FlowPanel hp = new FlowPanel();
         hp.add(new InlineLabel(key + ": "));
@@ -83,8 +83,8 @@ public class PDBPanel extends Composite {
         return hp;
     }
 
-    private Widget getRangeWidget(String key, Range value){
-        String aux = (value==null) ? "N/A" : "[" + value.getMin() + ", " + value.getMax() + "]";
+    private Widget getRangeWidget(String key, Range value) {
+        String aux = (value == null) ? "N/A" : "[" + value.getMin() + ", " + value.getMax() + "]";
 
         FlowPanel hp = new FlowPanel();
         hp.add(new InlineLabel(key + ": "));
@@ -98,17 +98,17 @@ public class PDBPanel extends Composite {
         return hp;
     }
 
-    private Widget getSummaryLink(String pdbId){
+    private Widget getSummaryLink(String pdbId) {
         //IMPORTANT: If the "cbc120" changes, maybe you also want to change the anchor width
 //        String url = "//www.ebi.ac.uk/pdbe-srv/view/images/entry/" + pdbId + "_cbc120.png";
-         String url = "//www.ebi.ac.uk/pdbe/static/entry/" + pdbId + "_deposited_chain_front_image-200x200.png";
+        String url = "//www.ebi.ac.uk/pdbe/static/entry/" + pdbId + "_deposited_chain_front_image-200x200.png";
 
         Image image = new Image(url);
         image.getElement().getStyle().setBorderWidth(0, Style.Unit.PX);
         image.getElement().getStyle().setWidth(120, Style.Unit.PX);
         image.getElement().getStyle().setHeight(120, Style.Unit.PX);
 
-        Anchor anchor = new Anchor("", "//www.ebi.ac.uk/pdbe-srv/view/entry/" + pdbId + "/summary" , "_blank");
+        Anchor anchor = new Anchor("", "//www.ebi.ac.uk/pdbe-srv/view/entry/" + pdbId + "/summary", "_blank");
         DOM.insertBefore(anchor.getElement(), image.getElement(), DOM.getFirstChild(anchor.getElement()));
         anchor.getElement().getStyle().setWidth(150, Style.Unit.PX);
         return anchor;

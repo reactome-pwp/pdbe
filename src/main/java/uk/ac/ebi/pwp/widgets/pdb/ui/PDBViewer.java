@@ -1,8 +1,6 @@
 package uk.ac.ebi.pwp.widgets.pdb.ui;
 
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.OpenEvent;
 import com.google.gwt.event.logical.shared.OpenHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -32,12 +30,12 @@ import java.util.List;
  */
 @SuppressWarnings("UnusedDeclaration")
 public class PDBViewer extends Composite implements HasHandlers, OpenHandler<DisclosurePanel>, PDBRetriever.ResultHandler {
-    private VerticalPanel container;
-    private DisclosurePanel disclosurePanel;
+    private final VerticalPanel container;
+    private final DisclosurePanel disclosurePanel;
     private boolean opened = false;
-    private String proteinAccession;
-    private String proteinName;
-    private PDBRetriever retriever;
+    private final String proteinAccession;
+    private final String proteinName;
+    private final PDBRetriever retriever;
 
     public PDBViewer(String proteinAccession, String proteinName) {
         this.container = new VerticalPanel();
@@ -58,7 +56,7 @@ public class PDBViewer extends Composite implements HasHandlers, OpenHandler<Dis
         this.getBestStructure();
     }
 
-    public HandlerRegistration addStructureLoadedHandler(PdbStructureLoadedHandler handler){
+    public HandlerRegistration addStructureLoadedHandler(PdbStructureLoadedHandler handler) {
         return this.addHandler(handler, PdbStructureLoadedEvent.TYPE);
     }
 
@@ -66,14 +64,14 @@ public class PDBViewer extends Composite implements HasHandlers, OpenHandler<Dis
         return this.addHandler(handler, pdbStructureNotAvailableEvent.TYPE);
     }
 
-    private void getBestStructure(){
+    private void getBestStructure() {
         String msg = "Loading best structure for " + this.proteinAccession + ". Please wait...";
         this.container.clear();
         this.container.add(PDBViewer.getLoadingMessage(msg));
         this.retriever.getBestStructure();
     }
 
-    public static Widget getLoadingMessage(String customMessage){
+    public static Widget getLoadingMessage(String customMessage) {
         HorizontalPanel hp = new HorizontalPanel();
         hp.setSpacing(5);
 
@@ -87,9 +85,9 @@ public class PDBViewer extends Composite implements HasHandlers, OpenHandler<Dis
         return hp;
     }
 
-    private static String getOrCreateDivId(Panel panel){
+    private static String getOrCreateDivId(Panel panel) {
         String divId = panel.getElement().getId();
-        if(divId.isEmpty()){
+        if (divId.isEmpty()) {
             divId = HTMLPanel.createUniqueId();
             panel.getElement().setId(divId);
         }
@@ -98,18 +96,18 @@ public class PDBViewer extends Composite implements HasHandlers, OpenHandler<Dis
 
     @Override
     public void setPDBEAllResults(List<PDBObject> pdbObjectList) {
-        if(!pdbObjectList.isEmpty()){
+        if (!pdbObjectList.isEmpty()) {
             pdbObjectList.remove(0);
         }
 
         VerticalPanel vp = new VerticalPanel();
         vp.setWidth("99%");
-        if(!pdbObjectList.isEmpty()){
+        if (!pdbObjectList.isEmpty()) {
             for (PDBObject pdbObject : pdbObjectList) {
                 vp.add(new PDBPanel(pdbObject, this.proteinName));
             }
             this.disclosurePanel.setContent(vp);
-        }else{
+        } else {
             this.disclosurePanel.setContent(new Label("Not more structures found for " + this.proteinAccession));
         }
     }
@@ -131,13 +129,13 @@ public class PDBViewer extends Composite implements HasHandlers, OpenHandler<Dis
 
     @Override
     public void onOpen(OpenEvent<DisclosurePanel> event) {
-        if(!this.opened){
+        if (!this.opened) {
             this.opened = true;
             this.getAllStructures();
         }
     }
 
-    private void getAllStructures(){
+    private void getAllStructures() {
         String msg = "Loading all PDB structures for " + this.proteinAccession;
         this.disclosurePanel.setContent(PDBViewer.getLoadingMessage(msg));
         this.retriever.getAllStructures();
@@ -152,23 +150,13 @@ public class PDBViewer extends Composite implements HasHandlers, OpenHandler<Dis
         Button tryAgain = new Button("Try again");
         flowPanel.add(tryAgain);
 
-        if(this.opened){
+        if (this.opened) {
             //The best was found, so this error is for the "all"
-            tryAgain.addClickHandler(new ClickHandler() {
-                @Override
-                public void onClick(ClickEvent event) {
-                    getAllStructures();
-                }
-            });
+            tryAgain.addClickHandler(event -> getAllStructures());
             this.disclosurePanel.setContent(flowPanel);
-        }else{
+        } else {
             //The error is trying to retrieve the "best"
-            tryAgain.addClickHandler(new ClickHandler() {
-                @Override
-                public void onClick(ClickEvent event) {
-                    getBestStructure();
-                }
-            });
+            tryAgain.addClickHandler(event -> getBestStructure());
             this.container.clear();
             this.container.add(flowPanel);
         }
