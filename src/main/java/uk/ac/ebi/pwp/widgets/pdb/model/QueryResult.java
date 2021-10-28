@@ -16,7 +16,7 @@ public class QueryResult extends JavaScriptObject {
     }-*/;
 
     public final native JsArray<PDBObject> getPDBObject(String accession) /*-{
-        if(Object.keys(this).length === 0) return [];
+        if (Object.keys(this).length === 0) return [];
         return this[accession];
     }-*/;
 

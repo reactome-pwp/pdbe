@@ -20,7 +20,6 @@ public class WidgetTest implements EntryPoint {
             public void onFailure(Throwable caught) {
             }
 
-            @SuppressWarnings("unchecked")
             public void onSuccess() {
                 RootPanel.get(PLACE_HOLDER).add(new PDBViewer("P35568", "UniProt:P35568 IRS1"));    //Contains results
 //                RootPanel.get(PLACE_HOLDER).add(new PDBViewer("Q8IZJ1", "UniProt:Q8IZJ1")); //Does NOT contain results

@@ -15,8 +15,9 @@ import java.util.List;
 public class PDBRetriever {
     private static final String PDBE_HOST = "https://www.ebi.ac.uk/";
     private static final String PDBE_APPS_URL_ALL = "pdbe/api/mappings/best_structures/";
-    private ResultHandler handler;
-    private String proteinAccession;
+    private final ResultHandler handler;
+    private final String proteinAccession;
+
     public PDBRetriever(String proteinAccession, ResultHandler handler) {
         this.proteinAccession = proteinAccession;
         this.handler = handler;
@@ -64,25 +65,23 @@ public class PDBRetriever {
             requestBuilder.sendRequest(null, new RequestCallback() {
                 @Override
                 public void onResponseReceived(Request request, Response response) {
-                    switch (response.getStatusCode()) {
-                        case Response.SC_OK:
-                            QueryResult result = QueryResult.buildQueryResult(response.getText());
-                            JsArray<PDBObject> pdbs = result.getPDBObject(proteinAccession);
-                            List<PDBObject> all = new LinkedList<>();
-                            for (int i = 0; i < pdbs.length(); i++) {
-                                PDBObject pdbObject = pdbs.get(i);
-                                if (!pdbObject.isEmpty()) {
-                                    all.add(pdbs.get(i));
-                                }
+                    if (response.getStatusCode() == Response.SC_OK) {
+                        QueryResult result = QueryResult.buildQueryResult(response.getText());
+                        JsArray<PDBObject> pdbs = result.getPDBObject(proteinAccession);
+                        List<PDBObject> all = new LinkedList<>();
+                        for (int i = 0; i < pdbs.length(); i++) {
+                            PDBObject pdbObject = pdbs.get(i);
+                            if (!pdbObject.isEmpty()) {
+                                all.add(pdbs.get(i));
                             }
-                            if (all.isEmpty()) {
-                                handler.onEmptyResult();
-                            } else {
-                                handler.setPDBEAllResults(all);
-                            }
-                            break;
-                        default:
+                        }
+                        if (all.isEmpty()) {
                             handler.onEmptyResult();
+                        } else {
+                            handler.setPDBEAllResults(all);
+                        }
+                    } else {
+                        handler.onEmptyResult();
                     }
                 }
 
