@@ -11,7 +11,7 @@ public class PDBObject extends JavaScriptObject {
     }
 
     public final native boolean isEmpty() /*-{
-        return this.tax_id==undefined;
+        return this.tax_id == undefined;
     }-*/;
 
     public final native int getTaxonomyId() /*-{
@@ -50,7 +50,7 @@ public class PDBObject extends JavaScriptObject {
         return this.unp_end;
     }-*/;
 
-    public final Range getUniprotRange(){
+    public final Range getUniprotRange() {
         return new Range(getUniprot_Start(), getUniprot_End());
     }
 
@@ -62,7 +62,7 @@ public class PDBObject extends JavaScriptObject {
         return this.end;
     }-*/;
 
-    public final Range getPdbRange(){
+    public final Range getPdbRange() {
         return new Range(this.getPdb_Start(), this.getPdb_End());
     }
 }

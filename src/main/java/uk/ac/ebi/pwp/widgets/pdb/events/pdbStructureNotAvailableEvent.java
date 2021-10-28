@@ -11,7 +11,7 @@ public class pdbStructureNotAvailableEvent extends GwtEvent<PdbStructureNotAvail
     @SuppressWarnings("Convert2Diamond")
     public static Type<PdbStructureNotAvailableHandler> TYPE = new Type<PdbStructureNotAvailableHandler>();
 
-    private String proteinAccession;
+    private final String proteinAccession;
 
     public pdbStructureNotAvailableEvent(String proteinAccession) {
         this.proteinAccession = proteinAccession;

@@ -19,7 +19,7 @@ public class PrintsWidget extends Composite {
     }
 
     private Orientation orientation;
-    private String pdbId;
+    private final String pdbId;
 
     public PrintsWidget(String pdbId) {
         this.orientation = Orientation.HORIZONTAL;
@@ -33,7 +33,7 @@ public class PrintsWidget extends Composite {
         initialize();
     }
 
-    private void initialize(){
+    private void initialize() {
         this.container = new SimplePanel();
         this.container.getElement().getStyle().setMarginTop(5, Style.Unit.PX);
         this.container.getElement().setId(Document.get().createUniqueId());
@@ -47,7 +47,7 @@ public class PrintsWidget extends Composite {
      */
     @Override
     protected void onLoad() {
-        if(this.p==null){
+        if (this.p == null) {
             String placeHolder = this.container.getElement().getId(); //this.getOrCreateDivId();
             String orientation = this.orientation.toString().toLowerCase();
             this.container.clear();

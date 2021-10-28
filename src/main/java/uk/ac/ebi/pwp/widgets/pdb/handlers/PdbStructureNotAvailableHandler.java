@@ -8,6 +8,6 @@ import uk.ac.ebi.pwp.widgets.pdb.events.pdbStructureNotAvailableEvent;
  */
 public interface PdbStructureNotAvailableHandler extends EventHandler {
 
-    public void onPdbStructureNotAvailable(pdbStructureNotAvailableEvent event);
+    void onPdbStructureNotAvailable(pdbStructureNotAvailableEvent event);
 
 }
