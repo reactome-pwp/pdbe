@@ -47,7 +47,7 @@ Then add the pdbe dependency
         <dependency>
             <groupId>uk.ac.ebi.pwp.widgets</groupId>
             <artifactId>pdb</artifactId>
-            <version>2.1.1</version>
+            <version>2.3.3</version>
         </dependency>
     <dependencies>
 ```
